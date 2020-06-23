@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Program List</title>
+</head>
+<script>
+let programs = [
+    {pTitle: "Information Technology", pPriority: "1", pStatus: "Available"},
+    {pTitle: "Engineering Design and Drafting Technology", pPriority: "2", pStatus: "Available"},
+    {pTitle: "Welding Engineering Technology", pPriority: "2", pStatus: "Not Available"},
+    {pTitle: "Account Oil and Gas Production", pPriority: "3", pStatus: "Available"},
+    {pTitle: "Baker Apprentice", pPriority: "1", pStatus: "Not Available"},
+    {pTitle: "Dental Assisting", pPriority: "1", pStatus: "Available"},
+    {pTitle: "Electrician Apprentice", pPriority: "2", pStatus: "Not Available"},
+    {pTitle: "Environmental Technology", pPriority: "3", pStatus: "Not Available"},
+    {pTitle: "Film and Video Production", pPriority: "1", pStatus: "Available"},
+    {pTitle: "Hospitality Management", pPriority: "2", pStatus: "Not Available"},
+    ];
+
+function displayPrograms(programList, listNode){
+    if(programList.length >0 ){
+        for (let i = 0; i <programList.length; i++) {
+            pItem = document.createElement("li");
+            pItemText = document.createTextNode(programList[i].pTitle)
+            pItem.appendChild(pItemText);
+            listNode.appendChild(pItem);
+        }
+    }
+    else{
+        pItem = document.createElement("li");
+        pItemText = document.createTextNode("No programs match your search criteria.")
+        pItem.appendChild(pItemText);
+        listNode.appendChild(pItem);
+    }
+
+}
+
+function filterPrograms(){
+
+    statusChoice = document.getElementById("status").selectedOptions[0].value
+    priorityChoice = document.getElementById("priority").selectedOptions[0].value;
+
+
+    selection = programs.filter(p=>(p.pStatus==statusChoice && p.pPriority==priorityChoice))
+    ProgramSelection = document.getElementById("available_programs")
+    ProgramSelection.innerHTML = '';
+    displayPrograms(selection, ProgramSelection)
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    //sort the provided program list
+    programs.sort(function(a,b) {
+        return a.pPriority-b.pPriority;
+    });
+
+    ProgramList = document.getElementById("program_list");
+    displayPrograms(programs, ProgramList);
+
+    }, false);
+
+</script>
+<body>
+
+<h2>Full Program List</h2>
+
+<ul id="program_list">
+
+</ul>
+
+<h2>Program Selector</h2>
+<form>
+    <label>Choose Status:</label>
+    <select id="status" onchange="filterPrograms()">
+        <option value="none">Please choose a status</option>
+        <option value="Available">Available</option>
+        <option value="Not Available">Not Available</option>
+    </select>
+    <br/>
+    <label>Choose Priority:</label>
+    <select id="priority" onchange="filterPrograms()">
+        <option value="none">Please choose a priority</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <br/>
+    <h3>Programs Available:</h3>
+    <ul id="available_programs">
+
+    </ul>
+</form>
+</body>
+</html>

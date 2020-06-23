@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Wage Calculator</title>
+
+
+</head>
+<script>
+    function wageCalc(){
+
+        // parse data in
+        salary = Number(document.getElementById("salary").value);
+        salary_type = document.getElementById("salary_type").selectedOptions[0].value;
+        hr_p_wk = Number(document.getElementById("hr_p_week").value);
+        days_p_wk = Number(document.getElementById("d_p_week").value);
+        vac_days = Number(document.getElementById("vac_days").value);
+        holidays = Number(document.getElementById("holidays").value);
+
+
+        switch(salary_type){
+            case "h":
+                sal_h = salary; //given
+                sal_w = salary * hr_p_wk;
+                sal_m = sal_w * 4.33 //using the average weeks per month here
+                sal_a = sal_w * 52;
+                break;
+            case "w":
+                sal_w = salary; //given
+                sal_h = sal_w / hr_p_wk;
+                sal_m = sal_w * 4.33;
+                sal_a = sal_w * 52;
+                break;
+            case "m":
+                sal_m = salary;
+                sal_w = sal_m / 4.33
+                sal_h = sal_w / hr_p_wk;
+                sal_a = sal_w * 52;
+                break;
+            case "a":
+                sal_a = salary;
+                sal_w = sal_a / 52;
+                sal_h = sal_w / hr_p_wk;
+                sal_m = sal_w & 4.33;
+                break;
+        }
+
+        //display the results
+        node_result_hourly = document.getElementById("result_hourly");
+        node_result_hourly.innerHTML=""
+        node_result_weekly = document.getElementById("result_weekly");
+        node_result_weekly.innerHTML=""
+        node_result_monthly = document.getElementById("result_monthly");
+        node_result_monthly.innerHTML=""
+        node_result_annually = document.getElementById("result_annually");
+        node_result_annually.innerHTML=""
+
+
+        text_res_hourly = document.createTextNode("$" + sal_h.toLocaleString('en-US',{minimumFractionDigits: 2}))
+        node_result_hourly.appendChild(text_res_hourly);
+        text_res_weekly = document.createTextNode("$" + sal_w.toLocaleString('en-US',{minimumFractionDigits: 2}))
+        node_result_weekly.appendChild(text_res_weekly);
+        text_res_monthly = document.createTextNode("$" + sal_m.toLocaleString('en-US',{minimumFractionDigits: 2}))
+        node_result_monthly.appendChild(text_res_monthly);
+        text_res_annually = document.createTextNode("$" + sal_a.toLocaleString('en-US',{minimumFractionDigits: 2}))
+        node_result_annually.appendChild(text_res_annually);
+return false;
+    }
+</script>
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <div class="row">&nbsp;</div>
+    <div class="container" id="wages_calc">
+        <div class="jumbotron">
+            <h1 class="display-4">Wage Calculator</h1>
+        </div>
+
+        <form onsubmit="event.preventDefault(); wageCalc();">
+            <div class="row mb-2">
+                <div class="col">
+                    <label for="salary">Salary:</label>
+                </div>
+                <div class="col">
+                    <input type="number" min="1" class="form-control" id="salary" value="30" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid city.
+                    </div>
+                </div>
+                <div class="col">
+                    <select class="form-control" id="salary_type">
+                        <option value="h">hourly</option>
+                        <option value="w">weekly</option>
+                        <option value="m">monthly</option>
+                        <option value="a">annually</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <label>Hours per week:</label>
+                </div>
+                <div class="col-8 lx">
+                    <input type="number" min="1" class="form-control col-sm-4" id="hr_p_week" value="40" size="30">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <label>Days per week:</label>
+                </div>
+                <div class="col-8 lx">
+                    <input type="number" min="1"  class="form-control col-sm-4" id="d_p_week" value="40" size="30">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <label>Vacation Days per year:</label>
+                </div>
+                <div class="col-8 lx">
+                    <input type="number" min="0"  class="form-control col-sm-4" id="vac_days" value="40" size="30">
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <label>Holidays per year:</label>
+                </div>
+                <div class="col-8 lx">
+                    <input type="number" min="0"  class="form-control col-sm-4" id="holidays" value="40" size="30">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary  mb-2">Calculate</button>
+        </form>
+
+        <div style="visibility: visible;">
+            <hr>
+            <h3>Wage Calculation Results:</h3>
+            <div class="row">
+                <div class="col-2">Hourly:</div>
+                <div class="col-2" id="result_hourly" style="text-align: right"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Weekly:</div>
+                <div class="col-2" id="result_weekly" style="text-align: right"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Monthly:</div>
+                <div class="col-2" id="result_monthly" style="text-align: right"></div>
+            </div>
+            <div class="row">
+                <div class="col-2">Annually:</div>
+                <div class="col-2" id="result_annually" style="text-align: right"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+
+</html>
