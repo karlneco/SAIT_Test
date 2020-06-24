@@ -22,5 +22,12 @@ implemented in the code obviously, however I felt in this instance that would be
 assessment.
 
 ## Question 3
-I have not had enough time to play with this as I could not get to the assessment until late iin the day.  I will 
-endeavour to finish this tomorrow morning.  
+Question 3 was a bit of a chore partialy due to my struggles with code pen, and the way they bundle things.  I'm sure 
+the actual files store would be simple to find things.  I've included a .css file as well for just the CSS changes as 
+I found it easier to manage css changes on their own for the css parts.
+
+For the slick-slider part I have reverted to the monolithic html file from codepen - for ease of verification the
+changes were only to the HTML part by wrapping the cards in g-slide divs (look around line 8982 in the bundled file 
+please).
+
+
